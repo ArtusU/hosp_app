@@ -1,0 +1,4 @@
+Question_id,Text,Responses
+Q1_binary,Did you get help from staff to keep in touch with your family and friends?,"1=Yes, 2=No"
+Q2_binary,Did you get enough help from staff to wash or keep yourself clean?,"1=Yes, 2=No"
+Q3_binary,Were you offered food that met any dietary needs or requirements you had?,"1=Yes, 2=No"

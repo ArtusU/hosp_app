@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculate Means</title>
+</head>
+<body>
+    <h1>Calculate Means</h1>
+
+
+    <label for="column_dropdown">Select a Question:</label>
+
+    <select id="column_dropdown">
+        {% for id, question in questions.items() %}
+            <option value="{{ id }}">{{ question }}</option>
+        {% endfor %}
+    </select>
+    
+    <table id="mean_table">
+        <thead>
+            <tr>
+                <th>Hospital</th>
+                <th>Mean</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        const columnDropdown = document.getElementById("column_dropdown");
+        columnDropdown.addEventListener("change", function() {
+            const selectedQuestion = columnDropdown.value;
+            console.log(selectedQuestion);
+
+            fetch('/calculate_mean', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ selectedQuestion })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector("#mean_table tbody");
+                    tableBody.innerHTML = "";
+                    Object.keys(data).forEach(hospital => {
+                      const mean = data[hospital];
+                      const row = `<tr><td>${hospital}</td><td>${mean}</td></tr>`;
+                      tableBody.insertAdjacentHTML("beforeend", row);
+                    });
+                })
+                .catch(error => {
+                console.error('Error:', error);
+                });
+        });
+    </script>
+
+
+</body>
+</html>
